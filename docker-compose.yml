@@ -1,0 +1,28 @@
+postgres:
+  image: postgres:9.4
+  environment:
+    POSTGRES_USER: loqalus-server
+    POSTGRES_PASSWORD: yourpassword
+  ports:
+    - '5432:5432'
+  # volumes:
+  #   - ~/.docker-volumes/loqalus-server/postgresql/data:/var/lib/postgresql/data
+
+redis:
+  image: redis:2.8.23
+  ports:
+    - '6379:6379'
+  volumes:
+    - /Users/ducatirx8/.docker-volumes/loqalus-server/redis/data:/var/lib/redis/data
+
+loqalus-server:
+  build: .
+  links:
+    - postgres
+    - redis
+  volumes:
+    - /Users/ducatirx8/Documents/loqalus/loqalus-server:/loqalus-server
+  ports:
+    - '8000:8000'
+  env_file:
+    - .loqalus-server.env

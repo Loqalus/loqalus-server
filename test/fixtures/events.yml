@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  start_time: 2016-06-11 22:32:30
+  start_date: 2016-06-11
+  description: MyText
+  link: MyString
+  in_house: false
+
+two:
+  title: MyString
+  start_time: 2016-06-11 22:32:30
+  start_date: 2016-06-11
+  description: MyText
+  link: MyString
+  in_house: false
