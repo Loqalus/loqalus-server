@@ -1,6 +1,5 @@
 ## Routes
 
-docker-compose run rails g model event title:string start_time:time start_date:date description:text link:string in_house:boolean
 
 
                   Prefix Verb   URI Pattern                    Controller#Action
@@ -26,14 +25,19 @@ cancel_user_registration GET    /users/cancel(.:format)        api/registrations
                          DELETE /api/users/:id(.:format)       api/users#destroy {:format=>:json} **
             api_sessions POST   /api/sessions(.:format)        api/sessions#create {:format=>:json} **
              api_session DELETE /api/sessions/:id(.:format)    api/sessions#destroy {:format=>:json} **
+                api_pins GET    /api/pins(.:format)            api/pins#index {:format=>:json} **
+                 api_tag GET    /api/tag(.:format)             api/tags#index {:format=>:json} **
+                         POST   /api/tag(.:format)             api/tags#create {:format=>:json} **
 
 
-Create a User
+
+
+###Create a User
 
 POST api/user
 
 request body:
-
+```
 {
     "user":{
         "email": "tomtom@bollaw.com",
@@ -41,22 +45,25 @@ request body:
         "password_confirmation": "brochacho"
     }
 }
-
+```
 The above hits api/registration#create
 
-Sign In a User
+###Sign In a User
 
 Post api/sessions
 
+request body:
+```
 {
     "user":{
         "email": "boblobloaw@law.com",
         "password": "brochacho"
     }
 }
+```
+response:
 
-Response 
-
+```
 {
   "user": {
     "id": 1,
@@ -66,3 +73,77 @@ Response
   },
   "auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYm9ibG9ibG9hd0BsYXcuY29tIiwiZXhwIjoxNDY1NzY5MzIyfQ.hEU_wiEP-XSo78yeliTX_MDPHWzKniNKuo66wZLuDB4"
 }
+```
+
+### Create a Tag
+
+POST api/tag
+
+request body:
+```
+{
+    "tag":{
+        "name": "rarePepe"
+    }
+}
+```
+response:
+
+```
+{
+    "tag":{
+        "name": "rarePepe"
+        "id": "133769420XX"
+    }
+}
+```
+
+
+### Retreive all tags
+
+GET api/tag
+
+response:
+
+```
+{
+    "tags":[
+             {
+               "name": "tag1",
+               "id": "Xyqt129"
+             },
+             .
+             .
+             .
+             {
+               "name": "cache",
+               "id": "m0n3t"
+             }
+    ]
+}
+```
+
+### Retreive all tags
+
+GET api/tag?lat=LAT&long=LONG&dist=DIST
+
+response:
+
+```
+{
+    "tags":[
+             {
+               "name": "tag1",
+               "id": "Xyqt129"
+             },
+             .
+             .
+             .
+             {
+               "name": "cache",
+               "id": "m0n3t"
+             }
+    ]
+}
+```
+

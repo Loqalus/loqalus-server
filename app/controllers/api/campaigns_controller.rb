@@ -47,6 +47,6 @@ class Api::CampaignsController < Api::BaseController
     end
 
     def campaign_params
-      params.require(:campaign).permit(:name, :description, :goal, :user_id, :lat, :long,:location_id)
+      params.require(:campaign).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house)
     end
 end

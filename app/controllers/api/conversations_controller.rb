@@ -46,6 +46,6 @@ class Api::ConversationsController < Api::BaseController
    end
 
     def conversation_params
-      params.require(:conversation).permit(:name, :description, :location, :user_id, :lat, :long, :location_id, :avatar, :background)
+      params.require(:conversation).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house)
     end
 end

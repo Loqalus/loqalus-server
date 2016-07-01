@@ -11,6 +11,15 @@ Rails.application.routes.draw do
       resources :events, :only => [:update, :destroy, :create, :show]
       resources :conversations, :only => [:update, :destroy, :create, :show]
     end
+
+    controller :pins do 
+      get '/pins' => :index
+    end
+
+    controller :tags do 
+      get '/tag' => :index
+      post 'tag' => :create
+    end
   end
 
 end
