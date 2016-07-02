@@ -6,7 +6,7 @@ class Api::EventsController < Api::BaseController
 
   def index
     @events = Event.all
-    render :json => {:message => @events}
+    render :json => {:events => @events}
   end
 
   def create

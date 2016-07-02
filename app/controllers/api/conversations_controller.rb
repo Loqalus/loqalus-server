@@ -6,7 +6,7 @@ class Api::ConversationsController < Api::BaseController
 
   def index
     @conversations = Conversation.all
-    render :json => {:message => @conversations}
+    render :json => {:conversations => @conversations}
   end
 
   def create

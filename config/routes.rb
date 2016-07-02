@@ -16,6 +16,18 @@ Rails.application.routes.draw do
       get '/pins' => :index
     end
 
+    controller :events do 
+      get '/events' => :index
+    end
+
+    controller :campaigns do 
+      get '/campaigns' => :index
+    end
+
+    controller :conversations do 
+      get '/conversations' => :index
+    end
+
     controller :tags do 
       get '/tag' => :index
       post 'tag' => :create
