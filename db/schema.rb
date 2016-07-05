@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627011415) do
+ActiveRecord::Schema.define(version: 20160705005940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160627011415) do
     t.float    "longitude"
     t.string   "user_id"
     t.string   "address"
+    t.integer  "action_type"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 20160627011415) do
     t.float    "longitude"
     t.string   "user_id"
     t.string   "address"
+    t.integer  "action_type"
   end
 
   create_table "events", force: :cascade do |t|
@@ -54,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160627011415) do
     t.float    "longitude"
     t.string   "user_id"
     t.string   "address"
+    t.integer  "action_type"
   end
 
   create_table "tags", force: :cascade do |t|
