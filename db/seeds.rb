@@ -34,17 +34,17 @@ convo_list = [
 	["convo4", "description of convo 4", "2", 40.506225, -88.998452, false, "", 2]
 ]
 
-tags = [
-	["dogs"],
-	["politics"],
-	["art"],
-	["melee"]
-]
+# tags = [
+# 	["dogs"],
+# 	["politics"],
+# 	["art"],
+# 	["melee"]
+# ]
 
 
-tags.each do |name|
-	Tag.create(name: name)
-end
+# tags.each do |name|
+# 	Tag.create(name: name)
+# end
 
 
 convo_list.each do |title, description, user_id, latitude, longitude , in_house, link, action_type|

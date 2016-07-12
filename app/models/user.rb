@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :tags
+  acts_as_taggable # Alias for acts_as_taggable_on :tags
   has_many :events, dependent: :destroy
   has_many :campaigns, dependent: :destroy
   has_many :conversations, dependent: :destroy

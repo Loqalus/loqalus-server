@@ -10,6 +10,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem 'acts-as-taggable-on'
 gem 'responders', '~> 2.0'
 gem 'devise'
 gem 'jwt', '~> 1.5.1'

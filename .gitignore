@@ -19,4 +19,4 @@
 /public/assets/*
 Gemfile.lock
 .loqalus-server.env
-
+docker-compose.yml
