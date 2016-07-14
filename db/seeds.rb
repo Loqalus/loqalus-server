@@ -84,19 +84,20 @@ User.all.each do |user|
   user.tag_list.add("art")
   user.tag_list.add("politics")
   user.tag_list.add("animals")
+  user.save
 end
 
-Event.add.each do |event|
+Event.all.each do |event|
   event.tag_list.add("melee")
   event.tag_list.add("politics")
+  event.save
 end
 
 Campaign.all.each do |campaign|
   campaign.tag_list.add("politics")
-  campaign.tag_list.add("art")
+  campaign.save
 end
 
 Conversation.all.each do |conversation|
-  conversation.tag_list.add("animals")
-  conversation.tag_list.add("melee")
+	conversation.save
 end

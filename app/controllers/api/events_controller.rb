@@ -44,11 +44,11 @@ class Api::EventsController < Api::BaseController
 
    private
 
-   def allowed_to_edit_event?
-   	@user == @curent_user
-   end
+  def allowed_to_edit_event?
+  	@user == @curent_user
+  end
 
-    def event_params
-      params.require(:event).permit(:title, :description, :start_date,:user_id, :latitude, :longitude, :in_house, :link)
-    end
+  def event_params
+    params.require(:event).permit(:title, :description, :start_date,:user_id, :latitude, :longitude, :in_house, :link)
+  end
 end

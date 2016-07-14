@@ -9,13 +9,12 @@ class Api::PinsController < Api::BaseController
     long = pins_params[:long].to_f()
     dist = params[:dist].to_i()
     filter = false
-    if(params.has_key?(:user_id)
-      uid = params[:user_id]
+    if params.has_key?(:uid) 
+      uid = params[:uid]
       @user = User.find(uid)
       filter = true
+      user_tags = @user.tag_list
     end
-    user_tags = @user.tag_list.split(/\s*,\s*/)
-
     pins = grab_pins(lat, long, dist)
     pins.sort! { |a, b|  a.distance <=> b.distance }
     if pins.length < 11
@@ -24,6 +23,7 @@ class Api::PinsController < Api::BaseController
     if filter
       pins = filter_pins(pins, user_tags)
     end
+    puts pins
     render  :json => {:pins => pins}
   end
 
@@ -37,19 +37,20 @@ class Api::PinsController < Api::BaseController
 
       for pin in pins
         dist_factor = dist_factorie(pin_counter)
-        tags_on_pin = pin.tag_list.split(/\s*,\s*/)
+        tags_on_pin = pin.tag_list
         pin_rankings[pin_counter] = pin_rankings[pin_counter] + dist_factor
 
         for tag in user_tags
 
-          if tags_on_pin.include ? tag
-            pin_rankings[pin_counter] = 1 + pin_rankings[pin_counter]
+          if tags_on_pin.include? tag
+            pin_rankings[pin_counter]+=1
           end
 
         end
 
         pin_counter+=1
       end
+      puts pin_rankings
       return sort_pins(pins, pin_rankings)
     end
 
@@ -58,7 +59,7 @@ class Api::PinsController < Api::BaseController
     end
 
     def sort_pins(pins, pin_rankings)
-      pairs = pins.zip(pins_rankings)
+      pairs = pins.zip(pin_rankings)
       pairs.sort! {|a, b| a[1] <=> b[1]}
       pairs.map(&:first)
       return pairs 
