@@ -9,6 +9,20 @@ class Api::EventsController < Api::BaseController
     render :json => {:events => @events}
   end
 
+  def comment
+    @event = Event.find(params[:id])
+    @comment = @event.comments.create
+    @comment.title = params[:title]
+    @comment.comment = params[:comment]
+    @comment.save
+  end
+
+  def get_comments
+    limit = params[:limit]
+    @event = Event.find(params[:id])
+    @event.comments.recent.limit(limit).all
+  end
+
   def create
      # binding.pry
 

@@ -15,6 +15,7 @@ gem 'responders', '~> 2.0'
 gem 'devise'
 gem 'jwt', '~> 1.5.1'
 gem 'geocoder'
+gem 'acts_as_commentable'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -9,6 +9,20 @@ class Api::CampaignsController < Api::BaseController
     render :json => {:campaigns => @campaigns}
   end
 
+  def comment
+    @campaign = Event.find(params[:id])
+    @comment = @campaign.comments.create
+    @comment.title = params[:title]
+    @comment.comment = params[:comment]
+    @comment.save
+  end
+
+  def get_comments
+    limit = params[:limit]
+    @campaign = Campaign.find(params[:id])
+    @campaign.comments.recent.limit(limit).all
+  end
+
   def create
     @campaign = Campaign.new(campaign_params)
     @campaign.user_id = campaign_params[:user_id]

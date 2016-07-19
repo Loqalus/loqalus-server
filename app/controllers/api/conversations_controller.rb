@@ -9,6 +9,20 @@ class Api::ConversationsController < Api::BaseController
     render :json => {:conversations => @conversations}
   end
 
+  def comment
+    @conversation = Event.find(params[:id])
+    @comment = @conversation.comments.create
+    @comment.title = params[:title]
+    @comment.comment = params[:comment]
+    @comment.save
+  end
+
+  def get_comments
+    limit = params[:limit]
+    @conversation = Conversation.find(params[:id])
+    @conversation.comments.recent.limit(limit).all
+  end
+
   def create
       @conversation = Conversation.new(conversation_params)
       @conversation.user_id = conversation_params[:user_id]

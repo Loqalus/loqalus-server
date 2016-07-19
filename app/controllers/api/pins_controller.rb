@@ -23,7 +23,7 @@ class Api::PinsController < Api::BaseController
     if filter
       pins = filter_pins(pins, user_tags)
     end
-    puts pins
+
     render  :json => {:pins => pins}
   end
 
