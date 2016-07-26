@@ -29,6 +29,6 @@ respond_to :json
 
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :location,:avatar, :background)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :location, :avatar, :background)
     end
 end

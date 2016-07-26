@@ -2,7 +2,7 @@ class Api::EventsController < Api::BaseController
 # TODO change whitelisted params
 	respond_to :json
 
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create]
+  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create, :comment, :get_comments]
 
   def index
     @events = Event.all
@@ -13,14 +13,17 @@ class Api::EventsController < Api::BaseController
     @event = Event.find(params[:id])
     @comment = @event.comments.create
     @comment.title = params[:title]
+    @comment.user_id = params[:user_id]
     @comment.comment = params[:comment]
     @comment.save
+    render :json => {:comment => @comment}
   end
 
   def get_comments
     limit = params[:limit]
     @event = Event.find(params[:id])
-    @event.comments.recent.limit(limit).all
+    @comments = @event.comments.recent.limit(limit).all
+    render :json => {:comments => @comments}
   end
 
   def create
@@ -63,6 +66,6 @@ class Api::EventsController < Api::BaseController
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :start_date,:user_id, :latitude, :longitude, :in_house, :link)
+    params.require(:event).permit(:title, :description, :start_date, :user_id, :latitude, :longitude, :in_house, :link, :id, :comment, :limit)
   end
 end

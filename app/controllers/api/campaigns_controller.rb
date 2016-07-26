@@ -1,7 +1,7 @@
 class Api::CampaignsController < Api::BaseController
 
   respond_to :json
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index]
+  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :comment, :get_comments]
 
 
   def index
@@ -13,14 +13,17 @@ class Api::CampaignsController < Api::BaseController
     @campaign = Event.find(params[:id])
     @comment = @campaign.comments.create
     @comment.title = params[:title]
+    @comment.user_id = params[:user_id]
     @comment.comment = params[:comment]
     @comment.save
+    render :json => {:comment => @comment}
   end
 
   def get_comments
     limit = params[:limit]
     @campaign = Campaign.find(params[:id])
-    @campaign.comments.recent.limit(limit).all
+    @comments = @campaign.comments.recent.limit(limit).all
+    render :json => {:comments => @comments}
   end
 
   def create
@@ -61,6 +64,6 @@ class Api::CampaignsController < Api::BaseController
     end
 
     def campaign_params
-      params.require(:campaign).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house)
+      params.require(:campaign).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house, :id, :comment, :limit)
     end
 end

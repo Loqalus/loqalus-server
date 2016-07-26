@@ -28,7 +28,14 @@ cancel_user_registration GET    /users/cancel(.:format)        api/registrations
                 api_pins GET    /api/pins(.:format)            api/pins#index {:format=>:json} **
                  api_tag GET    /api/tag(.:format)             api/tags#index {:format=>:json} **
                          POST   /api/tag(.:format)             api/tags#create {:format=>:json} **
-
+       api_events_comments POST   /api/events/comments(.:format)                  api/events#comment {:format=>:json}
+                           GET    /api/events/comments(.:format)                  api/events#get_comments {:format=>:json}
+             api_campaigns GET    /api/campaigns(.:format)                        api/campaigns#index {:format=>:json}
+    api_campaigns_comments POST   /api/campaigns/comments(.:format)               api/campaigns#comment {:format=>:json}
+                           GET    /api/campaigns/comments(.:format)               api/campaigns#get_comments {:format=>:json}
+         api_conversations GET    /api/conversations(.:format)                    api/conversations#index {:format=>:json}
+api_conversations_comments POST   /api/conversations/comments(.:format)           api/conversations#comment {:format=>:json}
+                           GET    /api/conversations/comments(.:format)           api/conversations#get_comments {:format=>:json}
 
 
 

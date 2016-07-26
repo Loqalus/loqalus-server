@@ -18,20 +18,20 @@ Rails.application.routes.draw do
 
     controller :events do 
       get '/events' => :index
-      post 'comments' => :comment
-      get '/comments' => :get_comments
+      post 'events/comments' => :comment
+      get 'events/comments' => :get_comments
     end
 
     controller :campaigns do 
       get '/campaigns' => :index
-      post 'comments' => :comment
-      get '/comments' => :get_comments
+      post '/campaigns/comments' => :comment
+      get '/campaigns/comments' => :get_comments
     end
 
     controller :conversations do 
       get '/conversations' => :index
-      post 'comments' => :comment
-      get '/comments' => :get_comments
+      post '/conversations/comments' => :comment
+      get '/conversations/comments' => :get_comments
     end
 
     controller :tags do 

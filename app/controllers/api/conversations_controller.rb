@@ -1,7 +1,7 @@
 class Api::ConversationsController < Api::BaseController
 # TODO change whitelisted params
   respond_to :json
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create]
+  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create, :comment, :get_comments]
 
 
   def index
@@ -13,14 +13,17 @@ class Api::ConversationsController < Api::BaseController
     @conversation = Event.find(params[:id])
     @comment = @conversation.comments.create
     @comment.title = params[:title]
+    @comment.user_id = params[:user_id]
     @comment.comment = params[:comment]
     @comment.save
+    render :json => {:comment => @comment}
   end
 
   def get_comments
     limit = params[:limit]
     @conversation = Conversation.find(params[:id])
-    @conversation.comments.recent.limit(limit).all
+    @comments = @conversation.comments.recent.limit(limit).all
+    render :json => {:comments => @comments}
   end
 
   def create
@@ -60,6 +63,6 @@ class Api::ConversationsController < Api::BaseController
    end
 
     def conversation_params
-      params.require(:conversation).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house)
+      params.require(:conversation).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house, :id, :comment, :limit)
     end
 end
