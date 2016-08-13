@@ -2,11 +2,16 @@ class Api::EventsController < Api::BaseController
 # TODO change whitelisted params
 	respond_to :json
 
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create, :comment, :get_comments]
+  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create, :comment, :get_comments, :event]
 
   def index
     @events = Event.all
     render :json => {:events => @events}
+  end
+
+  def event
+    @event = Event.find(params[:id])
+    render :json => { :event => @event}
   end
 
   def comment
@@ -26,25 +31,27 @@ class Api::EventsController < Api::BaseController
     render :json => {:comments => @comments}
   end
 
-  def create
-     # binding.pry
+  def rsvp
+    @event = Event.find(params[:id])
+    @event.attendanceList.attendies.push params[:user_id]
+    @event.save
+    render :json => {:message => @event}
+  end
 
-      @event = Event.new(event_params)
-      @event.user_id = event_params[:user_id]
-      @event.avatar = image if params[:image]
-       if @event.valid? then
-          # location handling. Rsvp list handling
-        end
-      @event.lat = event_params[:lat].to_f
-      @event.long = event_params[:long].to_f
-      @event.save
-      # RSVP the creator of the event
-      render :json => {:message => @event}
+
+  def create
+    @event = Event.new(event_params)
+    @event.create_attendanceList()
+    @event.save
+    @event.attendanceList.attendies.push params[:user_id]
+    @event.attendanceList.save
+    @event.save
+    render :json => {:message => @event}
   end
 
   def show
-     @event = Event.find(params[:id])
-     render :json => { :event => @event, :attendies => hashList}
+    @event = Event.find(params[:id])
+    render :json => { :event => @event, :attendies => hashList}
   end
 
   def update
@@ -54,7 +61,6 @@ class Api::EventsController < Api::BaseController
   end
 
   def destroy
-   
   	Event.find(params[:id]).destroy
     render :json => {:message => "Success"}
   end
@@ -66,6 +72,6 @@ class Api::EventsController < Api::BaseController
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :start_date, :user_id, :latitude, :longitude, :in_house, :link, :id, :comment, :limit)
+    params.require(:event).permit(:title, :description, :start_date, :user_id, :latitude, :longitude, :in_house, :link, :id, :comment, :limit, :action_type)
   end
 end

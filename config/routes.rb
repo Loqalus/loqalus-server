@@ -17,18 +17,22 @@ Rails.application.routes.draw do
     end
 
     controller :events do 
+      post '/event/rsvp' => :rsvp
+      get '/event/:id' => :event
       get '/events' => :index
-      post 'events/comments' => :comment
-      get 'events/comments' => :get_comments
+      post '/events/comments' => :comment
+      get '/events/comments' => :get_comments
     end
 
     controller :campaigns do 
+      get '/campaign/:id' => :campaign
       get '/campaigns' => :index
       post '/campaigns/comments' => :comment
       get '/campaigns/comments' => :get_comments
     end
 
     controller :conversations do 
+      get '/conversation/:id' => :conversation
       get '/conversations' => :index
       post '/conversations/comments' => :comment
       get '/conversations/comments' => :get_comments
