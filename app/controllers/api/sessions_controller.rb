@@ -1,30 +1,26 @@
-class Api::SessionsController < Api::BaseController
+class Api::SessionsController < ApplicationController
   skip_before_action :authenticate_user_from_token!
-  before_action :ensure_params_exist
 
   def create
-    @user = User.find_for_database_authentication(email: user_params[:email])
-    return invalid_login_attempt unless @user
-    return invalid_login_attempt unless @user.valid_password?(user_params[:password])
-    puts User.count
-    puts "ayy lmao"
-    @auth_token = jwt_token(@user)
-    render :json => {:user => @user, :auth_token => @auth_token}
-  end
-
-  private
-
-  def user_params
-    params.require(:user).permit(:email, :password)
-  end
-
-  def ensure_params_exist
-    if user_params[:email].blank? || user_params[:password].blank?
-      return render_unauthorized errors: { unauthenticated: ["Incomplete credentials"] }
+    user_password = params[:session][:password]
+    user_email = params[:session][:email]
+    user = user_email.present? && User.find_by(email: user_email)
+    puts User.find_by(email: user_email)
+    if user.valid_password? user_password
+      sign_in user, store: false
+      user.generate_authentication_token!
+      user.save
+    # render :json => { :event => User.all}
+      render json: user, status: 200, location: [:api, user]
+    else
+      render json: { errors: "Invalid email or password" }, status: 422
     end
   end
 
-  def invalid_login_attempt
-    render_unauthorized errors: { unauthenticated: ["Invalid credentials"] }
+  def destroy
+    user = User.find(params[:id])
+    user.generate_authentication_token!
+    user.save
+    head 204
   end
 end

@@ -28,7 +28,15 @@ class Api::EventsController < Api::BaseController
     limit = params[:limit]
     @event = Event.find(params[:id])
     @comments = @event.comments.recent.limit(limit).all
-    render :json => {:comments => @comments}
+    allComments = []
+    @comments.each do |comment|
+      user = User.find(comment.user_id).as_json
+      user[:auth_token] = ""
+      comment = comment.as_json
+      comment[:user] = user
+      allComments.append(comment)
+    end
+    render :json => {:comments => allComments}
   end
 
   def rsvp

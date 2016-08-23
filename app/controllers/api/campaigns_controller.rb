@@ -28,7 +28,14 @@ class Api::CampaignsController < Api::BaseController
     limit = params[:limit]
     @campaign = Campaign.find(params[:id])
     @comments = @campaign.comments.recent.limit(limit).all
-    render :json => {:comments => @comments}
+    @comments.each do |comment|
+      user = User.find(comment.user_id).as_json
+      user[:auth_token] = ""
+      comment = comment.as_json
+      comment[:user] = user
+      allComments.append(comment)
+    end
+    render :json => {:comments => allComments}
   end
 
   def create

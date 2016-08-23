@@ -7,11 +7,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 user_list = [
-  [ "boblobloaw@law.com", "brochacho", "brochacho" ],
-  [ "Allove1950@gustr.com", "brodudeman", "brodudeman" ],
-  [ "mangbro@jourrapide.com", "bibbidybo", "bibbidybo" ],
-  [ "Netherlands@gmail.com", "howdoyoudo", "howdoyoudo" ]
+  [ "boblobloaw@law.com", "brochacho", "brochacho", "Kyle" ],
+  [ "Allove1950@gustr.com", "brodudeman", "brodudeman", "Fox McCloud"],
+  [ "mangbro@jourrapide.com", "bibbidybo", "bibbidybo", "Tom" ],
+  [ "Netherlands@gmail.com", "howdoyoudo", "howdoyoudo", "Falco"]
 ]
+
+titles = ["Comment 1 title", "Comment 2 title", "Comment 3 title", "Comment 4 title", "Comment 5 title"]
+
+userIds = [1,2,3,4,1]
+
+comments = ["Same teacher said that the advent of cell phone technology would never work because one need only stand on the front lawn of another customer to charge a call to that person's account. Doubting this also lead to a removal from class that day.", "Oh sir, I assure you, for me getting on is most certainly the problem. And maintaining the handstand... and getting out", "Thats what i think", "Getting on isn't the problem.
+Getting out is", "Try moving around to narrow it down."]
 
 events_list = [
 	["Maecenas", "Lorem ipsum quis semper rutrum viverra ipsum.
@@ -64,8 +71,8 @@ events_list.each do |title, description, start_date, user_id, latitude, longitud
 end
 
 
-user_list.each do |email, password, password_confirmation|
-  User.create( email: email, password: password, password_confirmation: password_confirmation )
+user_list.each do |email, password, password_confirmation, name|
+  User.create( email: email, password: password, password_confirmation: password_confirmation , name: name)
 end
 
 User.all.each do |user|
@@ -86,6 +93,14 @@ Event.all.each do |event|
   event.attendanceList.attendies.push 2
   event.attendanceList.attendies.push 3
   event.attendanceList.save
+
+  for i in 0..3
+    @comment = event.comments.create
+    @comment.title = titles[i]
+    @comment.user_id = userIds[i]
+    @comment.comment = comments[i]
+    @comment.save
+  end
   event.save
 end
 
@@ -97,3 +112,5 @@ end
 Conversation.all.each do |conversation|
 	conversation.save
 end
+
+puts User.all

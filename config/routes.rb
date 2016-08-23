@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-  devise_for :users, :controllers => {sessions: 'api/sessions', registrations: 'api/registrations'}
+  devise_for :users
 
   namespace :api, defaults: { format: :json }  do
     resources :users, :only => [:show, :create, :update, :destroy]
@@ -21,21 +21,21 @@ Rails.application.routes.draw do
       get '/event/:id' => :event
       get '/events' => :index
       post '/events/comments' => :comment
-      get '/events/comments' => :get_comments
+      get '/events/:id/comments' => :get_comments
     end
 
     controller :campaigns do 
       get '/campaign/:id' => :campaign
       get '/campaigns' => :index
       post '/campaigns/comments' => :comment
-      get '/campaigns/comments' => :get_comments
+      get '/campaigns/:id/comments' => :get_comments
     end
 
     controller :conversations do 
       get '/conversation/:id' => :conversation
       get '/conversations' => :index
       post '/conversations/comments' => :comment
-      get '/conversations/comments' => :get_comments
+      get '/conversations/:id/comments' => :get_comments
     end
 
     controller :tags do 
