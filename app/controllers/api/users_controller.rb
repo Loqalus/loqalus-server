@@ -1,11 +1,17 @@
 class Api::UsersController < Api::BaseController
 respond_to :json
  
-   skip_before_action :authenticate_user_from_token!, only: [:show, :create]
+   skip_before_action :authenticate_user_from_token!, only: [:show, :create, :interests]
 
   def index
     @users = User.all
     render json: @users
+  end
+
+  def interests
+    user = User.find(params[:id])
+    tags = user.tags_list
+    render :json => {:tags => tags}
   end
 
   def create
@@ -20,7 +26,7 @@ respond_to :json
 
   def show
     @user = User.find(params[:id])
-    render json: @user
+    render :json => {:user => @user, :interests => @user.tag_list}
   end
 
   def update
@@ -39,6 +45,6 @@ respond_to :json
 
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :location, :avatar, :background)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :location, :avatar, :background, :tag_list => [])
     end
 end

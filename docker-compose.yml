@@ -21,7 +21,7 @@ loqalus-server:
     - postgres
     - redis
   volumes:
-    - /Users/ducatirx8/Documents/loqalus/loqalus-server:/loqalus-server
+    - /Users/ducatirx8/Documents/loqalus/loqalus-server/loqalus-server:/loqalus-server
   ports:
     - '8000:8000'
   env_file:

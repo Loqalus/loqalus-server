@@ -16,7 +16,12 @@ Rails.application.routes.draw do
       get '/pins' => :index
     end
 
+    controller :users do 
+      post 'users/interests' => :interests
+    end
+
     controller :events do 
+      get 'events/interests' => :interests
       post '/event/rsvp' => :rsvp
       get '/event/:id' => :event
       get '/events' => :index
@@ -24,14 +29,16 @@ Rails.application.routes.draw do
       get '/events/:id/comments' => :get_comments
     end
 
-    controller :campaigns do 
+    controller :campaigns do
+      get 'campaigns/interests' => :interests
       get '/campaign/:id' => :campaign
       get '/campaigns' => :index
       post '/campaigns/comments' => :comment
       get '/campaigns/:id/comments' => :get_comments
     end
 
-    controller :conversations do 
+    controller :conversations do
+      get 'conversations/interests' => :interests
       get '/conversation/:id' => :conversation
       get '/conversations' => :index
       post '/conversations/comments' => :comment

@@ -110,7 +110,30 @@ Campaign.all.each do |campaign|
 end
 
 Conversation.all.each do |conversation|
+  for i in 0..3
+    @comment = conversation.comments.create
+    @comment.title = titles[i]
+    @comment.user_id = userIds[i]
+    @comment.comment = comments[i]
+    @comment.save
+  end
 	conversation.save
 end
 
-puts User.all
+# puts User.all
+
+#         user_params = { 
+#           name: "test",
+#           email: "email@email.com",
+#           password: "testest",
+#           password_confirmation: "testest",
+#           bio: "Whats good in the hood.",
+#           tag_list: ["melee", "art", "politics"]
+#       }
+
+# user = User.new(user_params)
+
+# if user.save
+#   puts "oh shit whaddup"
+#   puts ActsAsTaggableOn::Tag.count
+# end

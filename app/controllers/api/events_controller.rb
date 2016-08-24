@@ -9,15 +9,20 @@ class Api::EventsController < Api::BaseController
     render :json => {:events => @events}
   end
 
+  def interests
+    event = Event.find(params[:id])
+    tags = event.tags_list
+    render :json => {:tags => tags}
+  end
+
   def event
     @event = Event.find(params[:id])
-    render :json => { :event => @event}
+    render :json => {:event => @event, :tags => @event.tag_list}
   end
 
   def comment
     @event = Event.find(params[:id])
     @comment = @event.comments.create
-    @comment.title = params[:title]
     @comment.user_id = params[:user_id]
     @comment.comment = params[:comment]
     @comment.save
@@ -80,6 +85,6 @@ class Api::EventsController < Api::BaseController
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :start_date, :user_id, :latitude, :longitude, :in_house, :link, :id, :comment, :limit, :action_type)
+    params.require(:event).permit(:title, :description, :start_date, :user_id, :latitude, :longitude, :in_house, :link, :id, :comment, :limit, :action_type, :tag_list => [])
   end
 end

@@ -9,13 +9,25 @@ class Api::CampaignsController < Api::BaseController
     render :json => {:campaigns => @campaigns}
   end
 
+  def interests
+    campaign = Campaign.find(params[:id])
+    tags = campaign.tags_list
+    render :json => {:tags => tags}
+  end
+
+
+  def campaign
+    @campaign = Campaign.find(params[:id])
+    render :json => {:campaign => @campaign, :tags => @campaign.tag_list}
+  end
+
   def show
     @campaign = Campaign.find(params[:id])
-    render :json => { :campaign => @campaign}
+    render :json => {:campaign => @campaign, :tags => @campaign.tag_list}
   end
 
   def comment
-    @campaign = Event.find(params[:id])
+    @campaign = Campaign.find(params[:id])
     @comment = @campaign.comments.create
     @comment.title = params[:title]
     @comment.user_id = params[:user_id]

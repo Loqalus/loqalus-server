@@ -9,15 +9,21 @@ class Api::ConversationsController < Api::BaseController
     render :json => {:conversations => @conversations}
   end
 
+  def interests
+    convo = Conversation.find(params[:id])
+    tags = convo.tags_list
+    render :json => {:tags => tags}
+  end
+
+
   def conversation
     @conversation = Conversation.find(params[:id])
-    render :json => { :conversation => @conversation}
+    render :json => {:conversation => @conversation, :tags => @conversation.tag_list}
   end
 
   def comment
-    @conversation = Event.find(params[:id])
+    @conversation = Conversation.find(params[:id])
     @comment = @conversation.comments.create
-    @comment.title = params[:title]
     @comment.user_id = params[:user_id]
     @comment.comment = params[:comment]
     @comment.save
@@ -28,6 +34,7 @@ class Api::ConversationsController < Api::BaseController
     limit = params[:limit]
     @conversation = Conversation.find(params[:id])
     @comments = @conversation.comments.recent.limit(limit).all
+    allComments = []
     @comments.each do |comment|
       user = User.find(comment.user_id).as_json
       user[:auth_token] = ""
@@ -68,6 +75,6 @@ class Api::ConversationsController < Api::BaseController
    end
 
     def conversation_params
-      params.require(:conversation).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house, :id, :comment, :limit, :action_type)
+      params.require(:conversation).permit(:title, :description, :user_id, :latitude, :longitude, :link, :in_house, :id, :comment, :limit, :action_type, :tag_list => [])
     end
 end
