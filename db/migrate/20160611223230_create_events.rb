@@ -8,8 +8,8 @@ class CreateEvents < ActiveRecord::Migration
       t.boolean :in_house
       t.integer :action_type
       t.string :user_id
-      t.foat :latitude
-      t.foat :longitude
+      t.float :latitude
+      t.float :longitude
 
       t.timestamps null: false
     end
