@@ -26,6 +26,7 @@ respond_to :json
 
   def show
     @user = User.find(params[:id])
+    @user[:auth_token] = "haha"
     render :json => {:user => @user, :interests => @user.tag_list}
   end
 
