@@ -1,5 +1,5 @@
 class Api::SessionsController < ApplicationController
-  skip_before_action :authenticate_user_from_token!
+  skip_before_action :authenticate_with_token!
 
   def create
     user_password = params[:session][:password]

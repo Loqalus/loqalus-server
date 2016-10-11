@@ -1,7 +1,7 @@
 class Api::PinsController < Api::BaseController
 
   respond_to :json
-  skip_before_action :authenticate_user_from_token!, only: [ :index]
+  skip_before_action :authenticate_with_token!, only: [ :index]
 
 
   def index
@@ -51,6 +51,7 @@ class Api::PinsController < Api::BaseController
         pin_counter+=1
       end
       puts pin_rankings
+      # ONLY RETURN TOP TEN
       return sort_pins(pins, pin_rankings)
     end
 

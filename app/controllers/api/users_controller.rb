@@ -1,7 +1,7 @@
 class Api::UsersController < Api::BaseController
 respond_to :json
  
-   skip_before_action :authenticate_user_from_token!, only: [:show, :create, :interests]
+   skip_before_action :authenticate_with_token!, only: [:show, :create, :interests, :all]
 
   def index
     @users = User.all
@@ -21,6 +21,25 @@ respond_to :json
     else
       render json: { errors: user.errors }, status: 422, message: "Something went wrong"
     end
+  end
+
+  def all
+    if request.headers['token'] == "thetoken"
+         @users = User.all
+         @users = @users.as_json
+    else
+      @users = []
+    end
+    @body = []
+      @users.each do |user|
+          user.delete("id")
+          user.delete("updated_at")
+          user.delete("bio")
+          user.delete("auth_token")
+        @body.push user
+        puts user
+      end
+      render json: @body
   end
 
 

@@ -1,7 +1,7 @@
 class Api::ConversationsController < Api::BaseController
 # TODO change whitelisted params
   respond_to :json
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create, :comment, :get_comments, :conversation]
+  skip_before_action :authenticate_with_token!, only: [:show, :index, :create, :comment, :get_comments, :conversation]
 
 
   def index
@@ -53,7 +53,7 @@ class Api::ConversationsController < Api::BaseController
 
   def show
     @conversation = Conversation.find(params[:id])
-    render :json => { :conversation => @conversation}
+    render :json => { :conversation => @conversation, :tags => @conversation.tag_list}
   end
 
   def update

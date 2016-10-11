@@ -1,7 +1,7 @@
 class Api::CampaignsController < Api::BaseController
 
   respond_to :json
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :comment, :get_comments, :campaign]
+  skip_before_action :authenticate_with_token!, only: [:show, :index, :comment, :get_comments, :campaign]
 
 
   def index

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
     controller :users do 
       post 'users/interests' => :interests
+      get 'user/info' => :all
     end
 
     controller :events do 

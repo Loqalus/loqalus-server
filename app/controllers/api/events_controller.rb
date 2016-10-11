@@ -2,7 +2,7 @@ class Api::EventsController < Api::BaseController
 # TODO change whitelisted params
 	respond_to :json
 
-  skip_before_action :authenticate_user_from_token!, only: [:show, :index, :create, :comment, :get_comments, :event]
+  skip_before_action :authenticate_with_token!, only: [:show, :index, :create, :comment, :get_comments, :event]
 
   def index
     @events = Event.all
@@ -64,7 +64,7 @@ class Api::EventsController < Api::BaseController
 
   def show
     @event = Event.find(params[:id])
-    render :json => { :event => @event, :attendies => hashList}
+    render :json => { :event => @event, :tags => @event.tag_list}
   end
 
   def update
