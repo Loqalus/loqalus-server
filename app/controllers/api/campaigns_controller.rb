@@ -18,7 +18,11 @@ class Api::CampaignsController < Api::BaseController
 
   def campaign
     @campaign = Campaign.find(params[:id])
-    render :json => {:campaign => @campaign, :tags => @campaign.tag_list}
+    @user = @campaign.user
+    if(!@user.nil?)
+      @user.auth_token = ""
+    end
+    render :json => {:campaign => @campaign, :tags => @campaign.tag_list, :creator => @user}
   end
 
   def show

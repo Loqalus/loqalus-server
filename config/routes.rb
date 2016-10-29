@@ -16,6 +16,10 @@ Rails.application.routes.draw do
       get '/pins' => :index
     end
 
+    controller :comments do 
+      delete '/comments' => :remove
+    end
+
     controller :users do 
       post 'users/interests' => :interests
       get 'user/info' => :all

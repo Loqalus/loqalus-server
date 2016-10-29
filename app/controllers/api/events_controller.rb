@@ -17,7 +17,11 @@ class Api::EventsController < Api::BaseController
 
   def event
     @event = Event.find(params[:id])
-    render :json => {:event => @event, :tags => @event.tag_list}
+    @user = @event.user
+    if(!@user.nil?)
+      @user.auth_token = ""
+    end
+    render :json => {:event => @event, :tags => @event.tag_list, :creator => @user}
   end
 
   def comment

@@ -18,7 +18,11 @@ class Api::ConversationsController < Api::BaseController
 
   def conversation
     @conversation = Conversation.find(params[:id])
-    render :json => {:conversation => @conversation, :tags => @conversation.tag_list}
+    @user = @conversation.user
+    if(!@user.nil?)
+      @user.auth_token = ""
+    end
+    render :json => {:conversation => @conversation, :tags => @conversation.tag_list, :creator => @user}
   end
 
   def comment
