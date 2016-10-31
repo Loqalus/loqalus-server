@@ -11,9 +11,13 @@ class Api::PinsController < Api::BaseController
     filter = false
     if ! (request.headers[:HTTP_USER_ID] == 'null')
       uid = request.headers[:HTTP_USER_ID]
-      @user = User.find(uid)
-      filter = true
-      user_tags = @user.tag_list
+      begin
+        @user = User.find(uid)
+        filter = true
+        user_tags = @user.tag_list
+      rescue ActiveRecord::RecordNotFound
+        filter = false
+      end
     end
     pins = grab_pins(lat, long, dist)
     pins.sort! { |a, b|  a.distance <=> b.distance }
